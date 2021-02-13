@@ -27,26 +27,24 @@ class Tag:
     def __str__(self):
         attrs = []
         for attribute, value in self.attributes.items():
-            attrs.append('%s="%s"' % (attribute, value))
+            attrs.append(f'{attribute}="{value}"')
         attrs = " ".join(attrs)
 
         if len(self.children) > 0:
-            opening = "<{tag} {attrs}>".format(tag=self.tag, attrs=attrs)
+            opening = f"<{self.tag} {attrs}>"
             if self.text:
-                internal = "%s" % self.text
+                internal = f"{self.text}"
             else:
                 internal = ""
             for child in self.children:
                 internal += str(child)
-            ending = "</%s>" % self.tag
+            ending = f"</self.tag>"
             return opening + internal + ending
         else:
             if self.is_single:
-                return "<{tag} {attrs}/>".format(tag=self.tag, attrs=attrs)
+                return f"<{self.tag} {attrs}/>"
             else:
-                return "<{tag} {attrs}>{text}</{tag}>".format(
-                    tag=self.tag, attrs=attrs, text=self.text
-                )
+                return f"<{self.tag} {attrs}>{self.text}</{self.tag}>"
 
 
 class HTML:
@@ -92,10 +90,10 @@ class TopLevelTag:
         pass
 
     def __str__(self):
-        html = "<%s>\n" % self.tag
+        html = f"<{self.tag}>\n"
         for child in self.children:
             html += str(child)
-        html += "\n</%s>" % self.tag
+        html += f"\n<{self.tag}>"
         return html
 
 
