@@ -10,24 +10,25 @@ sentry_sdk.init(
 
 app = Bottle()
 
-@route("/success/")
+@app.route("/success/")
 def hello_world():
     return "Hello World!" 
 
-@route("/fail/")
-def error(param):
-    raise RuntimeError
-
+@app.route("/fail/")
+def index():  
+    raise RuntimeError("There is an error!")  
+    return
+    
 def fib(n):
     a, b = 1, 1
     for _ in range(n):
         a, b = b, a + b
     return a
 
-@route("/fib/<n:int>")
+@app.route("/fib/<n:int>")
 def fib_handler(n):
     result = fib(n)
     return str(result)
 
 if __name__ == "__main__":
-    run(host="localhost", port=8080, debug=True)
+    app.run(host="localhost", port=8080, debug=True)
